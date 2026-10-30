@@ -1,0 +1,15 @@
+.app-shell {
+  min-height: 100%;
+}
+
+.app-content {
+  padding-top: var(--space-2xl);
+  padding-bottom: calc(var(--space-2xl) + 72px); /* clears mobile FAB */
+}
+
+@media (min-width: 1024px) {
+  .app-content {
+    padding-left: 96px; /* clears the left rail */
+    padding-bottom: var(--space-2xl);
+  }
+}

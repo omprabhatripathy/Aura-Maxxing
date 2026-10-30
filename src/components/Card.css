@@ -1,0 +1,19 @@
+.aura-card {
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.aura-card__eyebrow {
+  margin-bottom: var(--space-xs);
+}
+
+.aura-card__title {
+  color: var(--color-on-surface);
+}
+
+.aura-card__body {
+  color: var(--color-on-surface-variant);
+}

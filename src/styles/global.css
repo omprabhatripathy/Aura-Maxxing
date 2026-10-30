@@ -1,0 +1,167 @@
+@import './tokens.css';
+
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter');
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--elevation-0);
+  color: var(--color-on-background);
+  font-family: var(--font-family);
+  font-size: var(--type-body-md-size);
+  line-height: var(--type-body-md-leading);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient background: deep obsidian with a faint radial "aura" glow,
+   consistent with the futuristic-instrumentation brand personality. */
+body {
+  background:
+    radial-gradient(1200px 600px at 15% -10%, rgba(139, 92, 246, 0.12), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(167, 139, 250, 0.08), transparent 55%),
+    var(--elevation-0);
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---- Typography utility classes, matching the type tokens ---- */
+.text-display-lg {
+  font-size: var(--type-display-lg-size);
+  font-weight: var(--type-display-lg-weight);
+  line-height: var(--type-display-lg-leading);
+  letter-spacing: var(--type-display-lg-tracking);
+}
+
+.text-headline-lg {
+  font-size: var(--type-headline-lg-mobile-size);
+  font-weight: var(--type-headline-lg-mobile-weight);
+  line-height: var(--type-headline-lg-mobile-leading);
+}
+@media (min-width: 768px) {
+  .text-headline-lg {
+    font-size: var(--type-headline-lg-size);
+    font-weight: var(--type-headline-lg-weight);
+    line-height: var(--type-headline-lg-leading);
+    letter-spacing: var(--type-headline-lg-tracking);
+  }
+}
+
+.text-headline-md {
+  font-size: var(--type-headline-md-size);
+  font-weight: var(--type-headline-md-weight);
+  line-height: var(--type-headline-md-leading);
+}
+
+.text-body-lg {
+  font-size: var(--type-body-lg-size);
+  font-weight: var(--type-body-lg-weight);
+  line-height: var(--type-body-lg-leading);
+}
+
+.text-label-md {
+  font-size: var(--type-label-md-size);
+  font-weight: var(--type-label-md-weight);
+  line-height: var(--type-label-md-leading);
+  letter-spacing: var(--type-label-md-tracking);
+}
+
+.text-label-sm {
+  font-size: var(--type-label-sm-size);
+  font-weight: var(--type-label-sm-weight);
+  line-height: var(--type-label-sm-leading);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-on-surface-variant);
+}
+
+.text-muted {
+  color: var(--color-on-surface-variant);
+}
+
+/* ---- Elevation / Glassmorphism utilities ---- */
+.surface-level-1 {
+  background: var(--elevation-1);
+  border-radius: var(--radius-lg);
+}
+
+.surface-level-2-glass {
+  background: color-mix(in srgb, var(--elevation-2) 72%, transparent);
+  backdrop-filter: blur(var(--elevation-2-blur));
+  -webkit-backdrop-filter: blur(var(--elevation-2-blur));
+  border: 1px solid var(--elevation-border);
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+
+/* 1px top-left highlight border to simulate a light source from above */
+.surface-level-2-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0) 30%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.glow-primary {
+  box-shadow: 0 0 var(--glow-blur) rgba(139, 92, 246, var(--glow-opacity));
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-margin-mobile);
+}
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 var(--space-margin-desktop);
+  }
+}

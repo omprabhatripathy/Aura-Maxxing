@@ -1,0 +1,40 @@
+.aura-ring {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aura-ring__svg {
+  transform: rotate(-90deg);
+  filter: drop-shadow(0 0 6px rgba(139, 92, 246, 0.45));
+}
+
+.aura-ring__track {
+  stroke: var(--color-surface-container-high);
+}
+
+.aura-ring__progress {
+  stroke: var(--color-primary-token);
+  transition: stroke-dashoffset var(--duration-slow) var(--ease-standard);
+}
+
+.aura-ring__center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.aura-ring__value {
+  font-size: var(--type-headline-md-size);
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.aura-ring__label {
+  color: var(--color-on-surface-variant);
+}

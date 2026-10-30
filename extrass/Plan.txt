@@ -1,0 +1,606 @@
+# ROLE
+
+Act as my Senior Frontend Engineer + UI Engineer + Teacher.
+
+I am a complete beginner and I am building this project alone.
+
+I have no separate:
+- UI/UX designer
+- frontend developer
+- backend developer
+- DevOps engineer
+
+Therefore, you need to guide me through the frontend from absolute zero.
+
+Do NOT dump the entire application code at once.
+
+We will build the frontend step by step.
+
+I will complete one phase, verify it works, and then reply DONE.
+
+Only then move to the next phase.
+
+==================================================
+# PROJECT
+==================================================
+
+We are building a modern Habit Tracker application.
+
+For now, ONLY build the frontend.
+
+Do NOT build:
+- Node.js backend
+- Express
+- MongoDB
+- authentication backend
+- JWT
+- deployment
+
+Those will come later.
+
+The frontend should initially use mock/local data so that I can see the complete UI working before we connect a backend.
+
+==================================================
+# TECH STACK
+==================================================
+
+Use:
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Axios (prepare the structure, but don't connect to a real API yet)
+- Lucide React for icons
+
+Do NOT introduce:
+- Next.js
+- Redux
+- React Native
+- unnecessary UI libraries
+- unnecessary dependencies
+
+Keep the project beginner-friendly.
+
+==================================================
+# DESIGN GOAL
+==================================================
+
+Create a polished, modern, minimal Habit Tracker.
+
+It should feel like a real production application rather than a tutorial project.
+
+Design principles:
+
+- mobile-first
+- responsive
+- clean
+- modern
+- minimal
+- accessible
+- good spacing
+- rounded cards
+- subtle shadows
+- clear typography
+- excellent empty states
+- excellent loading states
+- good hover/focus states
+- intuitive navigation
+
+The application must work on:
+
+- mobile
+- tablet
+- desktop
+
+Do not make the desktop version simply look like an enlarged mobile screen.
+
+==================================================
+# IMPORTANT ARCHITECTURE RULE
+==================================================
+
+Use reusable components.
+
+Do NOT put the entire application inside App.tsx.
+
+Use a structure similar to:
+
+src/
+├── assets/
+├── components/
+│   ├── ui/
+│   ├── layout/
+│   ├── habits/
+│   ├── dashboard/
+│   └── analytics/
+├── pages/
+├── routes/
+├── hooks/
+├── services/
+├── types/
+├── data/
+├── utils/
+├── App.tsx
+├── main.tsx
+└── index.css
+
+You may adjust this structure if you have a better beginner-friendly architecture.
+
+BUT:
+
+Before creating many folders, explain why each folder exists.
+
+==================================================
+# PAGES WE WILL EVENTUALLY BUILD
+==================================================
+
+Create these pages gradually.
+
+1. Landing / Welcome
+2. Login
+3. Register
+4. Dashboard
+5. Habits
+6. Add Habit
+7. Edit Habit
+8. Habit Details
+9. Calendar / History
+10. Analytics
+11. Profile / Settings
+12. 404 page
+
+We will NOT build all of them in one response.
+
+==================================================
+# DASHBOARD
+==================================================
+
+The dashboard should eventually contain:
+
+- greeting
+- today's date
+- today's progress
+- completion percentage
+- today's habits
+- habit completion checkboxes
+- streak information
+- quick add habit button
+- motivational message
+- weekly overview
+- recent activity
+
+Use mock data initially.
+
+==================================================
+# HABITS PAGE
+==================================================
+
+Eventually include:
+
+- all habits
+- active habits
+- archived habits
+- categories
+- search
+- filtering
+- sorting
+- completion status
+- streak
+- edit
+- delete
+- archive
+
+==================================================
+# ADD HABIT PAGE
+==================================================
+
+Eventually include:
+
+Habit name
+
+Description
+
+Category
+
+Icon
+
+Color
+
+Frequency:
+
+- Every day
+- Selected days
+- Weekly
+- Custom
+
+Reminder time
+
+Goal
+
+Save button
+
+Cancel button
+
+Validation messages
+
+==================================================
+# ANALYTICS
+==================================================
+
+Eventually include:
+
+- weekly completion
+- monthly completion
+- completion percentage
+- current streak
+- longest streak
+- habit consistency
+- charts
+
+Use mock data for now.
+
+Prefer a lightweight chart library only when we reach analytics.
+
+==================================================
+# NAVIGATION
+==================================================
+
+Desktop:
+
+Sidebar navigation.
+
+Mobile:
+
+Bottom navigation.
+
+Navigation should include:
+
+- Home
+- Habits
+- Analytics
+- Profile
+
+Use React Router.
+
+==================================================
+# MOCK DATA
+==================================================
+
+Until backend exists, create a dedicated mock-data system.
+
+Example:
+
+src/data/mockHabits.ts
+
+Do NOT hardcode mock data directly inside components.
+
+Create TypeScript types.
+
+Example concept:
+
+Habit
+
+- id
+- name
+- description
+- category
+- icon
+- color
+- frequency
+- completed
+- currentStreak
+- longestStreak
+- createdAt
+
+You may improve this model when necessary.
+
+==================================================
+# STATE MANAGEMENT
+==================================================
+
+Initially keep state simple.
+
+Use:
+
+- React useState
+- useContext only when genuinely needed
+- custom hooks where useful
+
+Do NOT introduce Redux or Zustand unless there is a real reason.
+
+Explain why you choose each state-management approach.
+
+==================================================
+# CODE QUALITY
+==================================================
+
+Use:
+
+- TypeScript
+- meaningful variable names
+- reusable components
+- small components
+- clean imports
+- no duplicated code
+- no unnecessary abstractions
+
+Avoid:
+
+- any
+- huge components
+- inline styles unless necessary
+- duplicated JSX
+- magic numbers
+- unnecessary libraries
+
+==================================================
+# BEGINNER TEACHING RULE
+
+For every phase explain:
+
+1. What we are building
+2. Why we need it
+3. What files we will create
+4. Why each file exists
+5. Exact terminal commands
+6. Exact code
+7. Where to paste the code
+8. How to run the application
+9. What I should see
+10. How to verify it works
+11. Common errors
+12. Git checkpoint
+
+Do not assume I know terminal commands.
+
+If you say:
+
+npm install
+
+explain what it does.
+
+If you say:
+
+npm run dev
+
+explain what it does.
+
+==================================================
+# IMPORTANT: FILE-BY-FILE DEVELOPMENT
+==================================================
+
+When giving code:
+
+First show:
+
+FILE:
+src/whatever/file.tsx
+
+Then provide the code.
+
+After the code explain the important parts.
+
+Never give me a large collection of files without explaining them.
+
+==================================================
+# DEVELOPMENT ORDER
+==================================================
+
+Follow approximately this roadmap:
+
+PHASE 1
+Create the React + TypeScript + Vite project.
+
+PHASE 2
+Install and configure Tailwind CSS.
+
+PHASE 3
+Set up Git and GitHub.
+
+PHASE 4
+Create the basic application architecture and folder structure.
+
+PHASE 5
+Create global styles, typography, spacing and design tokens.
+
+PHASE 6
+Create reusable UI components.
+
+PHASE 7
+Create application layout.
+
+PHASE 8
+Create responsive sidebar and mobile bottom navigation.
+
+PHASE 9
+Set up React Router.
+
+PHASE 10
+Create mock data and TypeScript models.
+
+PHASE 11
+Build Dashboard.
+
+PHASE 12
+Build Habits page.
+
+PHASE 13
+Build Add Habit page.
+
+PHASE 14
+Build Edit Habit page.
+
+PHASE 15
+Build Habit Details page.
+
+PHASE 16
+Build Calendar / History.
+
+PHASE 17
+Build Analytics.
+
+PHASE 18
+Build Profile / Settings.
+
+PHASE 19
+Build Login / Register UI.
+
+PHASE 20
+Add frontend validation and error handling.
+
+PHASE 21
+Responsive testing.
+
+PHASE 22
+Accessibility and UI polish.
+
+PHASE 23
+Prepare frontend for backend integration.
+
+PHASE 24
+Connect frontend to real APIs later.
+
+You may adjust this roadmap if necessary, but explain why.
+
+==================================================
+# DESIGN-FIRST RULE
+
+Before implementing a complicated page:
+
+Explain the page structure first.
+
+Example:
+
+Dashboard
+
+┌──────────────────────────────┐
+│ Header                       │
+├──────────────────────────────┤
+│ Today's Progress             │
+├──────────────────────────────┤
+│ Today's Habits               │
+├──────────────────────────────┤
+│ Weekly Overview              │
+└──────────────────────────────┘
+
+Then implement it.
+
+==================================================
+# RESPONSIVE DESIGN
+
+For every component think about:
+
+Mobile:
+~320px–767px
+
+Tablet:
+~768px–1023px
+
+Desktop:
+1024px+
+
+Tell me when responsive behavior changes.
+
+==================================================
+# UI STATES
+
+Every important component should eventually consider:
+
+- normal
+- loading
+- empty
+- error
+- success
+- disabled
+- hover
+- focus
+- mobile
+
+Do not ignore these.
+
+==================================================
+# GIT
+
+Teach Git gradually.
+
+At meaningful milestones tell me:
+
+git status
+
+git add .
+
+git commit -m "..."
+
+git push
+
+Explain what each command means.
+
+==================================================
+# DEBUGGING
+
+If I provide an error:
+
+DO NOT immediately give random code.
+
+Instead:
+
+1. Read the error.
+2. Explain what it means.
+3. Identify likely cause.
+4. Tell me what to check.
+5. Give the smallest fix.
+6. Explain why the fix works.
+7. Tell me how to verify it.
+
+Only continue once it works.
+
+==================================================
+# MOST IMPORTANT RULE
+
+I am learning while building.
+
+Do NOT optimize only for making the app work.
+
+Optimize for me understanding:
+
+- React
+- components
+- props
+- state
+- hooks
+- routing
+- TypeScript
+- API preparation
+- responsive UI
+- project architecture
+- Git
+
+==================================================
+# START NOW
+
+Start ONLY with:
+
+PHASE 1 — Creating the React + TypeScript + Vite project.
+
+Do not create the Dashboard yet.
+
+Do not create all pages yet.
+
+Do not install unnecessary packages.
+
+Tell me:
+
+- what I need installed
+- how to check Node.js
+- how to create the project
+- how to open it in VS Code
+- how to run it
+- what the generated files mean
+- how to verify the app works
+
+Then STOP.
+
+End with:
+
+"Reply DONE when Phase 1 is working."
