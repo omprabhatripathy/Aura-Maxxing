@@ -1,0 +1,43 @@
+.journal-entry__text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.journal-entry__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--space-xs);
+  font-size: 0.8rem;
+  color: var(--color-on-surface-variant);
+}
+
+.journal-entry__mood {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.journal-entry__tag {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.journal-entry__actions {
+  margin-left: auto;
+  display: inline-flex;
+  gap: var(--space-md);
+}
+
+.journal-entry__actions button {
+  border: none;
+  background: none;
+  color: var(--color-primary-token);
+  font-size: 0.8rem;
+}
+
+.journal-entry__actions .journal-entry__delete {
+  color: var(--color-error);
+}

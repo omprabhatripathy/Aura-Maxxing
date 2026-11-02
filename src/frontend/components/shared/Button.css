@@ -1,0 +1,65 @@
+.aura-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-height: 44px;
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: var(--type-label-md-size);
+  font-weight: var(--type-label-md-weight);
+  letter-spacing: var(--type-label-md-tracking);
+  transition: transform var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard),
+    opacity var(--duration-fast) var(--ease-standard);
+}
+
+.aura-btn:active {
+  transform: scale(0.97);
+}
+
+.aura-btn--primary {
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary-accent));
+  box-shadow: 0 0 0 rgba(139, 92, 246, 0);
+}
+
+.aura-btn--primary:hover {
+  box-shadow: 0 0 var(--glow-blur) rgba(139, 92, 246, 0.35);
+}
+
+.aura-btn--ghost {
+  color: var(--color-on-surface);
+  background: transparent;
+  border-color: var(--color-outline-variant);
+}
+
+.aura-btn--ghost:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary-token);
+}
+
+.aura-btn--danger {
+  color: #fff;
+  background: linear-gradient(135deg, #e24848, #f0716b);
+}
+
+.aura-btn--danger:hover {
+  box-shadow: 0 0 18px rgba(226, 72, 72, 0.45);
+}
+
+.aura-btn--block {
+  width: 100%;
+}
+
+.aura-btn__icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.aura-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

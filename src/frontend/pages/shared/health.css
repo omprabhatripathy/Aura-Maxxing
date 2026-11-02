@@ -1,0 +1,51 @@
+.health-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.health-page__insights {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  color: var(--color-on-surface);
+}
+
+.health-page__modules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-md);
+}
+
+.health-page__module {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, #ec4899 35%, var(--elevation-border));
+  background: linear-gradient(140deg, rgba(236, 72, 153, 0.14), rgba(168, 85, 247, 0.1) 60%, transparent);
+  color: var(--color-on-surface);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.health-page__module:hover,
+.health-page__module:focus-visible {
+  transform: translateY(-2px);
+  border-color: #ec4899;
+  box-shadow: 0 14px 30px -18px rgba(236, 72, 153, 0.8);
+}
+
+.health-page__module > span:first-child {
+  font-size: 1.5rem;
+}
+
+.health-page__module > span:last-child {
+  font-size: 0.82rem;
+  color: var(--color-on-surface-variant);
+}

@@ -1,0 +1,213 @@
+rules_version = '2';
+
+// Every document lives under users/{uid}; only the signed-in owner can read or write it.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return signedIn() && request.auth.uid == userId;
+    }
+    function isString(field, maxLen) {
+      return field is string && field.size() <= maxLen;
+    }
+    function isIsoDate(field) {
+      return field is string && field.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.uid == userId;
+      // uid and createdAt are immutable.
+      allow update: if isOwner(userId)
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if false;
+
+      match /habits/{habitId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && isString(request.resource.data.label, 60)
+          && request.resource.data.category in ['health', 'learning', 'productivity', 'mindset', 'social']
+          && request.resource.data.priority in ['low', 'medium', 'high']
+          && request.resource.data.frequency in ['daily', 'weekly']
+          && (!('emoji' in request.resource.data) || isString(request.resource.data.emoji, 16));
+      }
+
+      match /habitLogs/{logId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && request.resource.data.habitId is string
+          && isIsoDate(request.resource.data.date);
+      }
+
+      match /goals/{goalId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && isString(request.resource.data.title, 80)
+          && request.resource.data.milestones is int
+          && request.resource.data.milestones >= 1 && request.resource.data.milestones <= 50
+          && request.resource.data.milestonesComplete >= 0
+          && request.resource.data.milestonesComplete <= request.resource.data.milestones
+          && (!('milestoneNames' in request.resource.data)
+            || (request.resource.data.milestoneNames is list
+              && request.resource.data.milestoneNames.size() == request.resource.data.milestones));
+      }
+
+      match /goalProgress/{progressId} {
+        allow read, delete: if isOwner(userId);
+        allow create: if isOwner(userId) && request.resource.data.goalId is string;
+        // Progress history is append-only.
+        allow update: if false;
+      }
+
+      match /journalEntries/{entryId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isString(request.resource.data.text, 10000);
+      }
+
+      match /moodLogs/{moodId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && request.resource.data.mood in ['happy', 'energetic', 'calm', 'neutral', 'low', 'stressed']
+          && request.resource.data.score >= 1 && request.resource.data.score <= 10
+          && isIsoDate(request.resource.data.date);
+      }
+
+      match /activityHistory/{activityId} {
+        allow read, delete: if isOwner(userId);
+        // Some entries use deterministic ids (e.g. a habit completion) so re-writes must be allowed.
+        allow create, update: if isOwner(userId) && isString(request.resource.data.message, 300);
+      }
+
+      match /analyticsSnapshots/{snapshotId} {
+        allow read, write: if isOwner(userId) && snapshotId.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
+      }
+
+      match /achievements/{achievementId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      match /settings/{settingId} {
+        allow read, write: if isOwner(userId) && settingId in ['preferences', 'periodReminders', 'finance'];
+      }
+
+      match /periodLogs/{date} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isIsoDate(date) && request.resource.data.date == date;
+      }
+
+      match /tasks/{taskId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && isString(request.resource.data.title, 120)
+          && request.resource.data.status in ['todo', 'in-progress', 'blocked', 'done', 'archived']
+          && request.resource.data.priority in ['low', 'medium', 'high', 'critical']
+          && request.resource.data.recurrence in ['none', 'daily', 'weekly', 'monthly']
+          && (request.resource.data.dueDate == null || isIsoDate(request.resource.data.dueDate))
+          && request.resource.data.subtasks is list && request.resource.data.subtasks.size() <= 50
+          && request.resource.data.attachments is list && request.resource.data.attachments.size() <= 10
+          && request.resource.data.tags is list && request.resource.data.tags.size() <= 8;
+      }
+
+      // Task timeline is append-only.
+      match /taskActivity/{activityId} {
+        allow read, delete: if isOwner(userId);
+        allow create: if isOwner(userId) && isString(request.resource.data.message, 300);
+        allow update: if false;
+      }
+
+      match /focusSessions/{sessionId} {
+        allow read, delete: if isOwner(userId);
+        allow create: if isOwner(userId)
+          && request.resource.data.minutes is int
+          && request.resource.data.minutes >= 1 && request.resource.data.minutes <= 1440
+          && isIsoDate(request.resource.data.date);
+        allow update: if false;
+      }
+
+      match /taskNotifications/{notificationId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && request.resource.data.kind in ['due-1d', 'due-1h', 'overdue', 'focus']
+          && isString(request.resource.data.body, 300);
+      }
+
+      match /taskStats/{date} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isIsoDate(date);
+      }
+
+      match /pomodoro/{sessionId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && request.resource.data.mode in ['focus', 'deep', 'custom', 'task']
+          && request.resource.data.category in ['study', 'coding', 'reading', 'work', 'exercise', 'personal', 'custom']
+          && request.resource.data.focusMinutes is number
+          && request.resource.data.focusMinutes >= 1 && request.resource.data.focusMinutes <= 180
+          && request.resource.data.actualMinutes is number
+          && request.resource.data.actualMinutes >= 0 && request.resource.data.actualMinutes <= 180
+          && request.resource.data.completed is bool
+          && isString(request.resource.data.notes, 500)
+          && isIsoDate(request.resource.data.date);
+      }
+
+      match /expenses/{expenseId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && request.resource.data.amount is number
+          && request.resource.data.amount > 0 && request.resource.data.amount <= 100000000
+          && request.resource.data.category in ['food', 'shopping', 'travel', 'bills', 'entertainment', 'medical', 'education', 'investments', 'subscriptions', 'other']
+          && request.resource.data.paymentMethod in ['cash', 'card', 'upi', 'bank', 'wallet', 'other']
+          && isString(request.resource.data.description, 120)
+          && isIsoDate(request.resource.data.date);
+      }
+
+      match /income/{incomeId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && request.resource.data.amount is number
+          && request.resource.data.amount > 0 && request.resource.data.amount <= 100000000
+          && isString(request.resource.data.source, 60)
+          && isIsoDate(request.resource.data.date);
+      }
+
+      match /schedule/{itemId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId)
+          && isString(request.resource.data.title, 80)
+          && isString(request.resource.data.description, 500)
+          && isIsoDate(request.resource.data.date)
+          && request.resource.data.start.matches('^[0-2][0-9]:[0-5][0-9]$')
+          && request.resource.data.end.matches('^[0-2][0-9]:[0-5][0-9]$')
+          && request.resource.data.category in ['work', 'study', 'health', 'meetings', 'personal', 'family', 'finance', 'other']
+          && request.resource.data.priority in ['low', 'medium', 'high']
+          && request.resource.data.recurrence in ['none', 'daily', 'weekdays', 'weekly']
+          && request.resource.data.completedDates is list
+          && request.resource.data.skippedDates is list;
+      }
+
+      // Schema v1 collections: readable for one-time migration, deletable by the owner, never written again.
+      match /journals/{entryId} {
+        allow read, delete: if isOwner(userId);
+      }
+      match /moods/{moodId} {
+        allow read, delete: if isOwner(userId);
+      }
+    }
+
+    // Maps a 10-digit mobile number to the account email so users can sign in with their number.
+    // Single-document reads only (no listing); each number can be claimed once, by its owner.
+    match /phoneIndex/{mobile} {
+      allow get: if mobile.matches('^[0-9]{10}$');
+      allow list, update: if false;
+      allow create: if signedIn()
+        && mobile.matches('^[0-9]{10}$')
+        && request.resource.data.keys().hasOnly(['uid', 'email'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == request.auth.token.email;
+      allow delete: if signedIn() && resource.data.uid == request.auth.uid;
+    }
+  }
+}

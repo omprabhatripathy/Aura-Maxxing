@@ -1,0 +1,35 @@
+.weekly-bars__plot {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.weekly-bars__col {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.weekly-bars__bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--color-primary-token), var(--color-primary));
+  opacity: 0.85;
+  border-radius: 6px 6px 2px 2px;
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.25);
+  transition: height 0.5s var(--ease-standard), opacity 0.2s ease;
+}
+
+.weekly-bars__bar:hover {
+  opacity: 1;
+}
+
+.weekly-bars__labels {
+  display: flex;
+  justify-content: space-around;
+  margin-top: var(--space-xs);
+  font-size: 0.7rem;
+  color: var(--color-outline);
+  text-transform: uppercase;
+}

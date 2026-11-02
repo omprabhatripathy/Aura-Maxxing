@@ -1,0 +1,37 @@
+.web-shell {
+  --web-gutter: clamp(24px, 3vw, 48px);
+  min-height: 100vh;
+  position: relative;
+}
+
+.web-shell__ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40vw 40vw at 85% -10%, rgba(139, 92, 246, 0.14), transparent 60%),
+    radial-gradient(35vw 35vw at 10% 110%, rgba(236, 72, 153, 0.08), transparent 60%);
+}
+
+.web-shell__main {
+  margin-left: var(--sidebar-w);
+  min-width: 0;
+  transition: margin-left 260ms var(--ease-standard);
+}
+
+.web-shell__content {
+  padding: var(--space-lg) var(--web-gutter) calc(var(--space-2xl) + 40px);
+}
+
+.web-shell__page {
+  width: 100%;
+  max-width: var(--web-content-max, 1480px);
+  margin: 0 auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .web-shell__main {
+    transition: none;
+  }
+}

@@ -1,0 +1,429 @@
+.habit-composer {
+  --hc-radius: 14px;
+  --hc-control-h: 52px;
+  --hc-glow: rgba(139, 92, 246, 0.35);
+  position: relative;
+  z-index: 2;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 22%, var(--elevation-border));
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(139, 92, 246, 0.14), transparent 55%),
+    color-mix(in srgb, var(--elevation-2) 72%, transparent);
+  backdrop-filter: blur(var(--elevation-2-blur, 20px)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--elevation-2-blur, 20px)) saturate(140%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 18px 40px -24px var(--hc-glow),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
+  transition: border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.habit-composer:hover,
+.habit-composer:focus-within {
+  border-color: color-mix(in srgb, var(--color-primary) 45%, var(--elevation-border));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 22px 48px -22px rgba(139, 92, 246, 0.5);
+}
+
+.habit-composer.is-success {
+  animation: hc-success-glow 1.2s ease-out;
+}
+
+@media (min-width: 640px) {
+  .habit-composer {
+    padding: 20px;
+  }
+}
+
+/* ---------- Header ---------- */
+.habit-composer__head {
+  margin-bottom: 14px;
+}
+
+.habit-composer__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  color: var(--color-on-surface);
+}
+
+.habit-composer__sub {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  color: var(--color-on-surface-variant);
+}
+
+/* ---------- Layout ---------- */
+.habit-composer__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.habit-composer__grid {
+  display: grid;
+  gap: 12px;
+}
+
+.habit-composer__grid.is-shaking {
+  animation: hc-shake 360ms cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+.habit-composer__options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* Two rows on phones: the last select takes the full second row so nothing is left empty. */
+.habit-composer__option:last-child {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 480px) {
+  .habit-composer__options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .habit-composer__option:last-child {
+    grid-column: auto;
+  }
+}
+
+@media (min-width: 960px) {
+  .habit-composer__grid {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 14px;
+  }
+}
+
+/* ---------- Name field (primary) ---------- */
+.habit-composer__name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--hc-control-h);
+  padding: 0 14px 0 6px;
+  border-radius: var(--hc-radius);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 30%, var(--color-outline-variant));
+  background: color-mix(in srgb, var(--color-surface-container) 80%, transparent);
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease, background 200ms ease;
+}
+
+.habit-composer__name:hover {
+  border-color: color-mix(in srgb, var(--color-primary) 55%, var(--color-outline-variant));
+}
+
+.habit-composer__name:focus-within {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-surface-container) 92%, transparent);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.22), 0 0 24px rgba(139, 92, 246, 0.25);
+  transform: translateY(-1px);
+}
+
+.habit-composer__name .emoji-picker__trigger {
+  width: 40px;
+  height: 40px;
+  font-size: 1.3rem;
+  border-radius: 10px;
+  border-color: transparent;
+  background: color-mix(in srgb, var(--color-primary) 14%, transparent);
+}
+
+.habit-composer__name .emoji-picker__trigger.is-empty {
+  filter: none;
+  opacity: 1;
+}
+
+.habit-composer__input:where(input) {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  min-height: 0;
+  padding: 0 4px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-on-surface);
+}
+
+.habit-composer__input:focus {
+  box-shadow: none;
+}
+
+.habit-composer__input::placeholder {
+  color: color-mix(in srgb, var(--color-on-surface-variant) 70%, transparent);
+  font-weight: 400;
+}
+
+.habit-composer__count {
+  flex: 0 0 auto;
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-outline);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.habit-composer__name:focus-within .habit-composer__count {
+  opacity: 1;
+}
+
+/* ---------- Selects (secondary) ---------- */
+.habit-composer__select {
+  position: relative;
+}
+
+.habit-composer__select label {
+  position: absolute;
+  top: 7px;
+  left: 14px;
+  z-index: 1;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant);
+  pointer-events: none;
+  transition: color 200ms ease;
+}
+
+.habit-composer__select select {
+  width: 100%;
+  height: var(--hc-control-h);
+  min-height: 0;
+  padding: 18px 34px 4px 14px;
+  border-radius: var(--hc-radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-on-surface);
+  background-position: right 12px center;
+  background-size: 14px;
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+
+.habit-composer__select.is-empty select {
+  color: var(--color-outline);
+}
+
+.habit-composer__select select:focus {
+  transform: translateY(-1px);
+}
+
+.habit-composer__select:focus-within label {
+  color: var(--color-primary-token);
+}
+
+.habit-composer__name.has-error,
+.habit-composer__select.has-error select {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-error) 18%, transparent);
+}
+
+.habit-composer__select.has-error label {
+  color: var(--color-error);
+}
+
+/* Progressive enhancement: animated, themed dropdown where customizable selects are supported. */
+@supports (appearance: base-select) {
+  .habit-composer__select select,
+  .habit-composer__select select::picker(select) {
+    appearance: base-select;
+  }
+
+  .habit-composer__select select {
+    display: flex;
+    align-items: center;
+  }
+
+  .habit-composer__select select::picker-icon {
+    display: none;
+  }
+
+  .habit-composer__select select::picker(select) {
+    margin-top: 6px;
+    padding: 6px;
+    border-radius: var(--hc-radius);
+    border: 1px solid color-mix(in srgb, var(--color-primary) 30%, var(--elevation-border));
+    background: var(--color-surface-container-high);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 18px rgba(139, 92, 246, 0.18);
+  }
+
+  .habit-composer__select select:open::picker(select) {
+    animation: hc-pop 180ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  }
+
+  .habit-composer__select option {
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    transition: background 150ms ease;
+  }
+
+  .habit-composer__select option:hover,
+  .habit-composer__select option:focus-visible {
+    background: color-mix(in srgb, var(--color-primary) 22%, transparent);
+  }
+
+  .habit-composer__select option:checked {
+    color: var(--color-primary-token);
+    font-weight: 600;
+  }
+
+  .habit-composer__select option[disabled] {
+    display: none;
+  }
+}
+
+/* ---------- Errors ---------- */
+.habit-composer__error {
+  margin: 6px 2px 0;
+  font-size: 0.75rem;
+  color: var(--color-error);
+  animation: hc-fade-in 200ms ease;
+}
+
+.habit-composer__error--form {
+  margin: 0;
+}
+
+/* ---------- CTA ---------- */
+.habit-composer__cta {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: var(--hc-radius);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-container) 55%, var(--color-secondary-accent) 100%);
+  background-size: 160% 100%;
+  background-position: 0% 0;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -10px rgba(139, 92, 246, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transition: transform 160ms ease, box-shadow 200ms ease, background-position 400ms ease, filter 200ms ease;
+}
+
+.habit-composer__cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.22) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 700ms ease;
+}
+
+.habit-composer__cta:hover:not(:disabled) {
+  background-position: 100% 0;
+  box-shadow: 0 14px 30px -10px rgba(139, 92, 246, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.habit-composer__cta:hover:not(:disabled)::after {
+  transform: translateX(100%);
+}
+
+.habit-composer__cta:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 6px 16px -8px rgba(139, 92, 246, 0.8);
+}
+
+.habit-composer__cta:focus-visible {
+  outline: 2px solid var(--color-primary-token);
+  outline-offset: 3px;
+}
+
+.habit-composer__cta.is-saving {
+  cursor: progress;
+  filter: saturate(0.85);
+}
+
+.habit-composer__cta.is-success {
+  background: linear-gradient(135deg, #16a34a, #22c55e 60%, #4ade80);
+  box-shadow: 0 10px 26px -10px rgba(34, 197, 94, 0.8);
+  animation: hc-pop 320ms cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}
+
+.habit-composer__spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  animation: hc-spin 0.7s linear infinite;
+}
+
+.habit-composer__check {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: hc-draw 360ms 80ms ease-out forwards;
+}
+
+/* ---------- Light theme ---------- */
+:root[data-theme='light'] .habit-composer {
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(139, 92, 246, 0.1), transparent 55%),
+    rgba(255, 255, 255, 0.78);
+}
+
+:root[data-theme='light'] .habit-composer__name {
+  background: #fff;
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes hc-shake {
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+@keyframes hc-pop {
+  from { opacity: 0; transform: translateY(-4px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes hc-fade-in {
+  from { opacity: 0; transform: translateY(-2px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes hc-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes hc-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes hc-success-glow {
+  0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55); }
+  60% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+  100% { box-shadow: 0 18px 40px -24px var(--hc-glow); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .habit-composer *,
+  .habit-composer {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .habit-composer__check {
+    stroke-dashoffset: 0;
+  }
+}

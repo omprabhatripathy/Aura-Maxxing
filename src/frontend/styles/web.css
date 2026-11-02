@@ -1,0 +1,183 @@
+/*
+ * Web-only presentation layer (tablet + desktop). Loaded with the WebShell chunk and scoped to
+ * .web-shell, so the mobile shell never sees these rules.
+ */
+
+.web-shell {
+  --topbar-h: 68px;
+  --web-radius: 20px;
+  --web-shadow-rest: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 10px 30px -22px rgba(0, 0, 0, 0.7);
+  --web-shadow-hover: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 22px 50px -24px rgba(139, 92, 246, 0.55);
+  --web-border: color-mix(in srgb, var(--elevation-border) 85%, transparent);
+  --web-border-hover: color-mix(in srgb, var(--color-primary) 55%, transparent);
+}
+
+/* ---------- Viewport reveal (driven by animations/useAutoReveal) ---------- */
+.web-shell [data-reveal]:not([data-revealed]) {
+  opacity: 0;
+}
+
+.web-shell [data-revealed] {
+  animation: web-reveal 560ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms) backwards;
+}
+
+@keyframes web-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+}
+
+/* ---------- Cards: glass, elevation, animated border ---------- */
+.web-shell .aura-card {
+  position: relative;
+  border-radius: var(--web-radius);
+  border-color: var(--web-border);
+  box-shadow: var(--web-shadow-rest);
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 260ms ease,
+    border-color 260ms ease;
+}
+
+.web-shell .aura-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--web-border-hover);
+  box-shadow: var(--web-shadow-hover);
+}
+
+.web-shell .aura-card:focus-within {
+  border-color: var(--web-border-hover);
+}
+
+/* Animated conic border that sweeps on hover (.aura-card has no pseudo layers of its own). */
+@property --web-border-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.web-shell .aura-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--web-border-angle), transparent 0 70%, rgba(192, 132, 252, 0.9) 85%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+
+.web-shell .aura-card:hover::after {
+  opacity: 1;
+  animation: web-border-spin 2.6s linear infinite;
+}
+
+@keyframes web-border-spin {
+  to {
+    --web-border-angle: 360deg;
+  }
+}
+
+/* Todo cards are framer-driven; only add elevation. */
+.web-shell .todo-card__inner {
+  transition: box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.web-shell .todo-card__inner:hover {
+  box-shadow: var(--web-shadow-hover);
+}
+
+/* ---------- Page layouts: use the width ---------- */
+.web-shell .ui-page-header {
+  margin-bottom: var(--space-sm);
+}
+
+.web-shell .goals-page__list,
+.web-shell .journal-page__entries {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+  align-items: start;
+}
+
+.web-shell .ui-grid {
+  gap: var(--space-lg);
+}
+
+/* Stat rows stretch to fill the line; card lists (habits) keep fixed-width columns. */
+.web-shell .ui-grid:not(:has(.habit-card)) {
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--ui-grid-min, 220px), 100%), 1fr));
+}
+
+.web-shell .profile-page__achievements {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+@media (min-width: 1200px) {
+  .web-shell .health-page__modules {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* Analytics overview: cards pair up side by side; wide widgets span the row. */
+  .web-shell .analytics-page--web {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg);
+    align-items: start;
+  }
+
+  .web-shell .analytics-page--web > * {
+    grid-column: 1 / -1;
+  }
+
+  .web-shell .analytics-page--web > .aura-card {
+    grid-column: auto;
+  }
+
+  .web-shell .analytics-page--web > .aura-card:has(.area-cards) {
+    grid-column: 1 / -1;
+  }
+
+  .web-shell .settings-page {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg);
+    align-items: start;
+  }
+
+  .web-shell .settings-page > .ui-page-header {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Mobile corner-wheel spacing isn't needed with the sidebar. */
+.web-shell .app-content__footer-note {
+  margin-top: var(--space-2xl);
+}
+
+/* ---------- Light theme ---------- */
+:root[data-theme='light'] .web-shell {
+  --web-shadow-rest: 0 10px 30px -24px rgba(60, 30, 120, 0.35);
+  --web-shadow-hover: 0 22px 46px -24px rgba(109, 40, 217, 0.4);
+}
+
+:root[data-theme='light'] .web-shell__ambient {
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .web-shell [data-revealed],
+  .web-shell .aura-card:hover::after {
+    animation: none;
+  }
+
+  .web-shell .aura-card,
+  .web-shell .aura-card:hover {
+    transition: none;
+    transform: none;
+  }
+}

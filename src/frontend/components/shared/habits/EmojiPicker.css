@@ -1,0 +1,105 @@
+.emoji-picker {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.emoji-picker__trigger {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  font-size: 1.35rem;
+  line-height: 1;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--elevation-border);
+  background: color-mix(in srgb, var(--elevation-2) 70%, transparent);
+  cursor: pointer;
+  transition: border-color var(--duration-fast, 150ms) ease, box-shadow var(--duration-fast, 150ms) ease;
+}
+
+.emoji-picker__trigger:hover,
+.emoji-picker__trigger[aria-expanded='true'] {
+  border-color: var(--color-primary-token);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-primary-token) 45%, transparent);
+}
+
+.emoji-picker__trigger.is-empty {
+  filter: grayscale(0.6);
+  opacity: 0.8;
+}
+
+.emoji-picker__panel {
+  position: fixed;
+  z-index: 2000;
+  width: min(300px, calc(100vw - 16px));
+  max-height: 340px;
+  overflow-y: auto;
+  padding: var(--space-sm);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--elevation-border);
+  background: var(--elevation-2);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  transform-origin: top left;
+  animation: emoji-picker-pop 180ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+
+@keyframes emoji-picker-pop {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.emoji-picker__group + .emoji-picker__group {
+  margin-top: var(--space-sm);
+}
+
+.emoji-picker__group-label {
+  margin: 0 0 4px;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant);
+}
+
+.emoji-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2px;
+}
+
+.emoji-picker__option {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: none;
+  cursor: pointer;
+}
+
+.emoji-picker__option:hover,
+.emoji-picker__option:focus-visible {
+  background: color-mix(in srgb, var(--color-primary-token) 18%, transparent);
+}
+
+.emoji-picker__option.is-selected {
+  border-color: var(--color-primary-token);
+}
+
+.emoji-picker__clear {
+  margin-top: var(--space-sm);
+  width: 100%;
+  padding: 6px;
+  background: none;
+  border: 1px dashed var(--elevation-border);
+  border-radius: 10px;
+  color: var(--color-on-surface-variant);
+  font-size: var(--type-label-md-size);
+  cursor: pointer;
+}

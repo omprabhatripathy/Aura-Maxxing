@@ -1,0 +1,13 @@
+.mood-icon-neon {
+  color: #c4a5ff;
+  filter:
+    drop-shadow(0 0 2px #b388ff)
+    drop-shadow(0 0 6px rgba(168, 85, 247, 0.85))
+    drop-shadow(0 0 14px rgba(139, 92, 246, 0.55));
+  transition: filter var(--duration-base) var(--ease-standard), transform var(--duration-base) var(--ease-standard);
+}
+
+:root[data-theme='light'] .mood-icon-neon {
+  color: #7c3aed;
+  filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.55));
+}

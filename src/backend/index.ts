@@ -1,0 +1,11 @@
+export * as habitService from './services/habitService';
+export * as goalService from './services/goalService';
+export * as journalService from './services/journalService';
+export * as profileService from './services/profileService';
+export * as systemService from './services/systemService';
+export * as authService from './auth/authService';
+export { buildReport, AREAS, AREA_LABELS } from './analytics/radar';
+export * as progressionService from './services/progressionService';
+export type { AnalyticsReport, RadarResult, UserDataSet } from './analytics/radar';
+export { toUserMessage, ValidationError } from './core/errors';
+export * from './models';

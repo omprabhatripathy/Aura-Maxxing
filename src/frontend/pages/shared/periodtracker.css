@@ -1,0 +1,56 @@
+.period-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.period-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.period-page__disclaimer {
+  font-size: 0.8rem;
+  color: var(--color-on-surface-variant);
+  padding: var(--space-sm) var(--space-md);
+  border-left: 3px solid var(--color-tertiary);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--color-tertiary) 6%, transparent);
+}
+
+.period-page__status {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--color-success) 45%, transparent);
+  background: color-mix(in srgb, var(--color-success) 10%, transparent);
+  color: var(--color-success);
+  font-size: 0.9rem;
+}
+
+.period-page__reminders {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 45%, transparent);
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  color: var(--color-on-surface);
+  font-size: 0.9rem;
+}
+
+.period-page__charts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+@media (min-width: 960px) {
+  .period-page__charts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .period-page__charts > .period-chart--wide {
+    grid-column: 1 / -1;
+  }
+}

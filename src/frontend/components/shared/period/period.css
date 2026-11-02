@@ -1,0 +1,412 @@
+/* ---------- Calendar ---------- */
+.period-cal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.period-cal__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.period-cal__month {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.period-cal__weekdays,
+.period-cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.period-cal__weekdays {
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-outline);
+}
+
+.period-cal__day {
+  position: relative;
+  aspect-ratio: 1;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-on-surface);
+  font-size: 0.9rem;
+  transition: background var(--duration-base) var(--ease-standard), border-color var(--duration-base) var(--ease-standard);
+}
+
+.period-cal__day:hover {
+  border-color: var(--color-outline-variant);
+}
+
+.period-cal__day--outside {
+  opacity: 0.4;
+}
+
+/* Actual logged period: filled with the existing period colour, stronger for heavier flow */
+.period-cal__day--period {
+  color: var(--color-on-tertiary);
+  font-weight: 600;
+  background: var(--color-tertiary);
+}
+
+.period-cal__day--flow-1 { background: color-mix(in srgb, var(--color-tertiary) 35%, transparent); color: var(--color-on-surface); }
+.period-cal__day--flow-2 { background: color-mix(in srgb, var(--color-tertiary) 60%, transparent); }
+.period-cal__day--flow-3 { background: color-mix(in srgb, var(--color-tertiary) 85%, transparent); }
+.period-cal__day--flow-4 { background: var(--color-tertiary); box-shadow: 0 0 8px rgba(243, 174, 255, 0.5); }
+
+/* Predicted period: outline only, never filled, so it can't be confused with logged days */
+.period-cal__day--predicted {
+  border: 2px dashed var(--color-tertiary);
+}
+
+.period-cal__day--fertile {
+  background: color-mix(in srgb, var(--color-primary) 16%, transparent);
+}
+
+.period-cal__day--ovulation {
+  box-shadow: inset 0 0 0 2px var(--color-primary-token);
+}
+
+.period-cal__day--today {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.period-cal__day--selected {
+  border-color: var(--color-on-surface);
+}
+
+.period-cal__dot {
+  position: absolute;
+  bottom: 3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-primary-token);
+}
+
+.period-cal__day--period .period-cal__dot {
+  background: var(--color-on-tertiary);
+}
+
+.period-cal__legend {
+  list-style: none;
+  margin: var(--space-sm) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-md);
+  font-size: 0.75rem;
+  color: var(--color-on-surface-variant);
+}
+
+.period-cal__legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.period-cal__swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.period-cal__swatch--period { background: var(--color-tertiary); }
+.period-cal__swatch--predicted { border: 2px dashed var(--color-tertiary); }
+.period-cal__swatch--fertile { background: color-mix(in srgb, var(--color-primary) 30%, transparent); }
+.period-cal__swatch--ovulation { box-shadow: inset 0 0 0 2px var(--color-primary-token); }
+
+.period-cal__dot--legend {
+  position: static;
+}
+
+/* ---------- Daily log / period form ---------- */
+.daily-log {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.daily-log__section {
+  margin: 0;
+  padding: var(--space-md);
+  border: 1px solid var(--elevation-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-width: 0;
+}
+
+.daily-log__section:disabled {
+  opacity: 0.55;
+}
+
+.daily-log__legend {
+  padding: 0 6px;
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.daily-log__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.daily-log__moods,
+.daily-log__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.daily-log__ratings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-sm);
+}
+
+.daily-log__ratings > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.daily-log__custom {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-end;
+}
+
+.daily-log__severities {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.daily-log__severity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  font-size: 0.85rem;
+  color: var(--color-on-surface);
+}
+
+.daily-log__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}
+
+.daily-log__delete {
+  margin-right: auto;
+  color: var(--color-error);
+}
+
+.period-form__ongoing {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--color-on-surface);
+  font-size: 0.9rem;
+}
+
+.period-form__days {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.period-form__day {
+  display: grid;
+  grid-template-columns: minmax(90px, 1fr) minmax(120px, 1.4fr) 80px;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.period-form__day .ui-field {
+  flex: initial;
+}
+
+.period-form__day-label {
+  font-size: 0.85rem;
+  color: var(--color-on-surface-variant);
+}
+
+.period-form__hint {
+  font-size: 0.75rem;
+}
+
+/* ---------- History ---------- */
+.period-history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.period-history__item .aura-card__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.period-history__main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--color-on-surface);
+}
+
+.period-history__badges,
+.period-history__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ---------- Charts ---------- */
+.period-chart {
+  min-width: 0;
+}
+
+.period-chart__canvas {
+  position: relative;
+  height: 260px;
+  width: 100%;
+}
+
+.period-chart__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.period-chart__donut {
+  position: relative;
+  max-width: 260px;
+  margin: 0 auto;
+}
+
+.period-chart__donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: var(--color-on-surface-variant);
+  font-size: 0.75rem;
+}
+
+.period-chart__donut-center strong {
+  font-size: 1.75rem;
+  color: var(--color-on-surface);
+}
+
+.period-chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.period-chart__swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.period-chart__picker {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.period-chart__note,
+.period-chart__dates {
+  font-size: 0.8rem;
+  color: var(--color-on-surface-variant);
+  line-height: 1.5;
+}
+
+.period-chart__dates {
+  color: var(--color-on-surface);
+}
+
+.period-insights {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  color: var(--color-on-surface);
+}
+
+/* ---------- Reminders ---------- */
+.reminders {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.reminders__custom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+}
+
+.reminders__custom-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.reminders__custom-row .ui-switch {
+  padding: 0;
+}
+
+.reminders__hint {
+  font-size: 0.75rem;
+}
+
+@media (max-width: 480px) {
+  .period-form__day {
+    grid-template-columns: 1fr 1fr;
+  }
+  .period-form__day-label {
+    grid-column: 1 / -1;
+  }
+}

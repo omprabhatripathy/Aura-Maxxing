@@ -1,0 +1,35 @@
+.journal-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.journal-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.journal-page__form textarea {
+  resize: vertical;
+  line-height: var(--type-body-lg-leading);
+}
+
+.journal-page__form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.journal-page__entries {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.journal-page__tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}

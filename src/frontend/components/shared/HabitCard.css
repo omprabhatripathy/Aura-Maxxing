@@ -1,0 +1,136 @@
+.habit-card {
+  position: relative;
+  justify-content: space-between;
+  min-height: 160px;
+}
+
+.habit-card--complete {
+  opacity: 0.75;
+}
+
+.habit-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-sm);
+}
+
+.habit-card__identity {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  min-width: 0;
+}
+
+.habit-card__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: rgba(208, 188, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.habit-card__name {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--color-on-surface);
+  overflow-wrap: anywhere;
+}
+
+.habit-card--complete .habit-card__name {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.habit-card__category {
+  font-size: 0.75rem;
+  color: var(--color-on-surface-variant);
+  text-transform: capitalize;
+}
+
+.habit-card__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+}
+
+.habit-card__right {
+  text-align: right;
+}
+
+.habit-card__points-btn {
+  margin: -4px -6px;
+  padding: 4px 6px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.habit-card__points-btn:hover,
+.habit-card__points-btn:focus-visible {
+  border-color: color-mix(in srgb, var(--color-primary) 50%, transparent);
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  outline: none;
+}
+
+.habit-card__stat-label {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-outline);
+  margin-bottom: 2px;
+}
+
+.habit-card__stat {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.habit-card__stat small {
+  font-size: 0.8rem;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.habit-card__points {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-tertiary);
+}
+
+.habit-card__stat--muted {
+  font-size: 1.1rem;
+  color: var(--color-on-surface);
+}
+
+.habit-card--archived {
+  opacity: 0.6;
+}
+
+.habit-card__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  border-top: 1px solid var(--elevation-border);
+  padding-top: var(--space-xs);
+}
+
+.habit-card__link {
+  border: none;
+  background: none;
+  color: var(--color-primary-token);
+  font-size: var(--type-label-md-size);
+  font-weight: 500;
+}

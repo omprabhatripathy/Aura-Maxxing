@@ -1,0 +1,178 @@
+/* ==========================================================================
+   Aura Design System — Design Tokens
+   Generated from DESIGN.md. Do not hardcode raw hex values outside this file.
+   ========================================================================== */
+
+:root {
+  /* ---- Color: surfaces ---- */
+  --color-surface: #12131a;
+  --color-surface-dim: #12131a;
+  --color-surface-bright: #383940;
+  --color-surface-container-lowest: #0c0e14;
+  --color-surface-container-low: #1a1b22;
+  --color-surface-container: #1e1f26;
+  --color-surface-container-high: #282a31;
+  --color-surface-container-highest: #33343c;
+  --color-on-surface: #e2e1eb;
+  --color-on-surface-variant: #cbc3d7;
+  --color-inverse-surface: #e2e1eb;
+  --color-inverse-on-surface: #2f3037;
+  --color-outline: #958ea0;
+  --color-outline-variant: #494454;
+  --color-surface-variant: #33343c;
+  --color-background: #12131a;
+  --color-on-background: #e2e1eb;
+
+  /* ---- Color: brand ---- */
+  --color-surface-tint: #d0bcff;
+  --color-primary: #8b5cf6; /* core brand driver, per Colors section */
+  --color-primary-token: #d0bcff; /* tonal primary token from palette */
+  --color-on-primary: #3c0091;
+  --color-primary-container: #a078ff;
+  --color-on-primary-container: #340080;
+  --color-inverse-primary: #6d3bd7;
+
+  --color-secondary: #cebdff;
+  --color-secondary-accent: #a78bfa; /* gradient partner for primary buttons */
+  --color-on-secondary: #381385;
+  --color-secondary-container: #4f319c;
+  --color-on-secondary-container: #bea8ff;
+
+  --color-tertiary: #f3aeff;
+  --color-on-tertiary: #4e155d;
+  --color-tertiary-container: #b979c6;
+  --color-on-tertiary-container: #470c56;
+
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+
+  --color-success: #4ade80; /* used for habit-chip completion glow */
+
+  --color-primary-fixed: #e9ddff;
+  --color-primary-fixed-dim: #d0bcff;
+  --color-on-primary-fixed: #23005c;
+  --color-on-primary-fixed-variant: #5516be;
+
+  --color-secondary-fixed: #e8ddff;
+  --color-secondary-fixed-dim: #cebdff;
+  --color-on-secondary-fixed: #21005e;
+  --color-on-secondary-fixed-variant: #4f319c;
+
+  --color-tertiary-fixed: #fcd6ff;
+  --color-tertiary-fixed-dim: #f3aeff;
+  --color-on-tertiary-fixed: #340042;
+  --color-on-tertiary-fixed-variant: #682f76;
+
+  /* ---- Elevation (dark-first architecture) ---- */
+  --elevation-0: #0b0b0f;
+  --elevation-1: #141419;
+  --elevation-2: #1b1b22;
+  --elevation-border: #27272a;
+  --elevation-2-blur: 12px;
+  --glow-blur: 20px;
+  --glow-opacity: 0.15;
+
+  /* ---- Typography ---- */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --type-display-lg-size: 48px;
+  --type-display-lg-weight: 700;
+  --type-display-lg-leading: 1.1;
+  --type-display-lg-tracking: -0.02em;
+
+  --type-headline-lg-size: 32px;
+  --type-headline-lg-weight: 600;
+  --type-headline-lg-leading: 1.2;
+  --type-headline-lg-tracking: -0.01em;
+
+  --type-headline-lg-mobile-size: 24px;
+  --type-headline-lg-mobile-weight: 600;
+  --type-headline-lg-mobile-leading: 1.2;
+
+  --type-headline-md-size: 24px;
+  --type-headline-md-weight: 600;
+  --type-headline-md-leading: 1.3;
+
+  --type-body-lg-size: 18px;
+  --type-body-lg-weight: 400;
+  --type-body-lg-leading: 1.6;
+
+  --type-body-md-size: 16px;
+  --type-body-md-weight: 400;
+  --type-body-md-leading: 1.5;
+
+  --type-label-md-size: 14px;
+  --type-label-md-weight: 500;
+  --type-label-md-leading: 1.2;
+  --type-label-md-tracking: 0.02em;
+
+  --type-label-sm-size: 12px;
+  --type-label-sm-weight: 600;
+  --type-label-sm-leading: 1;
+
+  /* ---- Shape ---- */
+  --radius-sm: 0.25rem;   /* checkboxes */
+  --radius: 0.5rem;       /* buttons / inputs */
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;      /* cards */
+  --radius-xl: 1.5rem;    /* large sections / modals */
+  --radius-full: 9999px;  /* pills */
+
+  /* ---- Spacing (4px base unit) ---- */
+  --space-unit: 4px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --space-gutter: 24px;
+  --space-margin-mobile: 16px;
+  --space-margin-desktop: 48px;
+
+  /* ---- Motion ---- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}
+
+/* ---- Breakpoints, shadows & responsive scale (mirrors frontend/lib/designTokens.ts) ----
+ * mobile  < 768px   base values above (unchanged)
+ * tablet  768–1199  web shell, collapsed sidebar, 2-column grids
+ * desktop ≥ 1200    web shell, expanded sidebar, 3–4 column grids
+ */
+:root {
+  --bp-tablet: 768px;
+  --bp-desktop: 1200px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 10px 30px -18px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 24px 60px -30px rgba(0, 0, 0, 0.75);
+  --shadow-glow: 0 18px 44px -22px rgba(139, 92, 246, 0.6);
+  --radius-2xl: 20px;
+  --web-content-max: 1480px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --space-page: 24px;
+    --type-scale: 1.04;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --space-page: 40px;
+    --type-scale: 1.08;
+  }
+}
